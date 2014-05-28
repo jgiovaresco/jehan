@@ -1,0 +1,18 @@
+{
+    "name": "jehan",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Web interface to administrates severals Jenkins servers",
+    "homepage": "https://github.com/jgiovaresco/jehan",
+    "license": "MIT",
+    "devDependencies": {
+        "http-server": "^0.6.1",
+        "bower": "^1.3.1"
+    },
+    "scripts": {
+        "postinstall": "bower install",
+
+        "prestart": "npm install",
+        "start": "http-server -p 8000"
+    }
+}

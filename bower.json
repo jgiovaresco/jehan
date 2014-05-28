@@ -1,0 +1,24 @@
+{
+    "name": "jehan",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Web interface to administrates severals Jenkins servers",
+    "homepage": "https://github.com/jgiovaresco/jehan",
+    "license": "MIT",
+    "authors": [
+        "jgiovaresco <dev@giovaresco.fr>"
+    ],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "1.2.x",
+        "angular-route": "~1.2.x",
+        "angular-resource": "~1.2.x",
+        "bootstrap": "~3.1.1"
+    }
+}

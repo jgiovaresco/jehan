@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Url</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="instance in instances">
+                    <td>
+                        {{instance.name}}
+                    </td>
+                    <td>
+                        <a href="{{instance.url}}" target="_blank">{{instance.url}}</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

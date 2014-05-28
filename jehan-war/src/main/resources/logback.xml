@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="logback.xsd">
+
+	<!-- Déclarations des appender -->
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d %-5level %logger{36} - %msg%n%ex{short}</pattern>
+		</encoder>
+	</appender>
+	<appender name="async_console" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="console"/>
+	</appender>
+
+	<appender name="fichier" class="ch.qos.logback.core.FileAppender">
+		<file>log/trace.log</file>
+		<append>false</append>
+		<encoder>
+			<pattern>%d %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="async_fichier" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="fichier"/>
+	</appender>
+
+	<!-- Déclarations des loggers -->
+
+	<logger name="com.github" level="ERROR"/>
+	<logger name="rest_request" level="ERROR"/>
+
+    <logger name="org.glassfish.jersey" level="ERROR"/>
+
+	<root level="INFO">
+		<appender-ref ref="async_console"/>
+	</root>
+</configuration>
