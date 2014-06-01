@@ -4,7 +4,8 @@ JeHan is a web interface which allows you to administrates severals Jenkins serv
 
 # Features
  
-* Shows all Jobs of many Jenkins servers with their name, last build status and the url to access them.
+* Shows in the home page all jobs KO of all Jenkins servers
+* Shows the jobs of many Jenkins servers with their name, last build status and the url to access them.
 * Shows the Jenkins servers configured in JeHan.
 
 # How to build
