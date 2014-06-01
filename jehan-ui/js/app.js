@@ -7,7 +7,10 @@ jehanApp.config(['$routeProvider', function ($routeProvider) {
           controller: 'HomeCtrl' }).
       when('/instances', {
         templateUrl: '/view/instances.html',
-        controller: 'InstancesListCtrl' })
+        controller: 'InstancesListCtrl' }).
+      when('/jobs/:instanceName?', {
+          templateUrl: '/view/jobs.html',
+          controller: 'JobsCtrl' })
     ;
 }]);
 
