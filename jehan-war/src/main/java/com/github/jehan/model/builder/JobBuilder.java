@@ -1,5 +1,6 @@
 package com.github.jehan.model.builder;
 
+import com.github.jehan.model.BuildStatus;
 import com.github.jehan.model.Job;
 
 /**
@@ -47,6 +48,12 @@ public class JobBuilder
    }
 
    public JobBuilder withColor(String p_color)
+   {
+      m_job.setColor(BuildStatus.forValue(p_color));
+      return this;
+   }
+
+   public JobBuilder withColor(BuildStatus p_color)
    {
       m_job.setColor(p_color);
       return this;

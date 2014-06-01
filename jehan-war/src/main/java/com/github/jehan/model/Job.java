@@ -7,6 +7,8 @@ package com.github.jehan.model;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.google.common.base.Objects;
 
 /**
@@ -25,7 +27,7 @@ public class Job implements Serializable
    private String m_url;
 
    /** The color. */
-   private String m_color;
+   private BuildStatus m_color;
 
    // ------------------------- public methods -------------------------
 
@@ -33,6 +35,19 @@ public class Job implements Serializable
    public String toString()
    {
       return Objects.toStringHelper(this).add("name", m_name).add("url", m_url).add("color", m_color).toString();
+   }
+
+   /**
+    * Returns true if the last build of the jobs has failed.
+    * <p>
+    *    The build has failed if the compilation or tests has failed.
+    * </p>
+    * @return true if the last build of the jobs has failed, false otherwise
+    */
+   @JsonIgnore
+   public boolean isLastBuildFailed()
+   {
+      return BuildStatus.FAILED == m_color || BuildStatus.TEST_FAILED == m_color;
    }
 
    /**
@@ -75,7 +90,7 @@ public class Job implements Serializable
     * Returns the color.
     * @return The color.
     */
-   public String getColor()
+   public BuildStatus getColor()
    {
       return m_color;
    }
@@ -84,7 +99,7 @@ public class Job implements Serializable
     * Sets the color.
     * @param p_color The color.
     */
-   public void setColor(String p_color)
+   public void setColor(BuildStatus p_color)
    {
       m_color = p_color;
    }
