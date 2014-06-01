@@ -5,15 +5,23 @@
 // -----------------------------------------------------------------------------
 package com.github.jehan.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.jehan.model.Instance;
+import com.github.jehan.model.Job;
 import com.github.jehan.model.builder.InstanceBuilder;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -36,15 +44,20 @@ public class InstanceServiceImpl implements InstanceService
 
    // ------------------------- private members -------------------------
 
-   /** The instances configured. */
-   private Map<String, Instance> m_instances = new HashMap<>();
+   /** The job service. */
+   @Autowired
+   private JobService m_jobService;
 
-   // ------------------------- constructor -------------------------
+   /** The instances configured. */
+   private Map<String, Instance> m_instances = new TreeMap<>();
+
+   // ------------------------- public methods -------------------------
 
    /**
-    * Constructor.
+    * Initialize the service.
     */
-   public InstanceServiceImpl()
+   @PostConstruct
+   public void initialize()
    {
       Config m_jenkinsUrl = ConfigFactory.load("jehan", ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON), ConfigResolveOptions.defaults());
 
@@ -55,8 +68,6 @@ public class InstanceServiceImpl implements InstanceService
          m_instances.put(name, InstanceBuilder.create().withName(name).withUrl(url).withVersion("1.564").get());
       }
    }
-
-   // ------------------------- public methods -------------------------
 
    /**
     * {@inheritDoc}
@@ -71,6 +82,35 @@ public class InstanceServiceImpl implements InstanceService
 
       LOGGER.debug("end of findAll() : {}", instances);
       return instances;
+   }
+
+   /**
+    * {@inheritDoc}
+    * @see com.github.jehan.services.InstanceService#findAllWithJobsKo()
+    */
+   @Override
+   public Collection<Instance> findAllWithJobsKo()
+   {
+      List<Instance> instancesWithJobsKo = new ArrayList<>();
+
+      for (Instance instance : m_instances.values())
+      {
+         Collection<Job> jobs = m_jobService.findAll(instance);
+         Iterator<Job> jobIterator = jobs.iterator();
+         boolean jobsKo = false;
+
+         while (!jobsKo && jobIterator.hasNext())
+         {
+            jobsKo = jobIterator.next().isLastBuildFailed();
+         }
+
+         if (jobsKo)
+         {
+            instancesWithJobsKo.add(instance);
+         }
+      }
+
+      return instancesWithJobsKo;
    }
 
    /**

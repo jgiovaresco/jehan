@@ -16,6 +16,12 @@ public interface InstanceService
     Collection<Instance> findAll();
 
    /**
+    * Retrieves all Jenkins server instances with jobs KO.
+    * @return All Jenkins server instances with jobs KO.
+    */
+   Collection<Instance> findAllWithJobsKo();
+
+   /**
     * Retrieve a Jenkins server instance for its id.
     * @param p_Id The id.
     * @return The {@link com.github.jehan.model.Instance} or null.
