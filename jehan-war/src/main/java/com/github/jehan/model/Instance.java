@@ -1,8 +1,8 @@
 package com.github.jehan.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-import com.google.common.base.Objects;
 
 /**
  * Defines a Jenkins' server instance.
@@ -23,9 +23,30 @@ public class Instance implements Serializable
    // ------------------------- public methods -------------------------
 
    @Override
+   public boolean equals(Object p_o)
+   {
+      boolean equals = false;
+      if (null != p_o && getClass() == p_o.getClass())
+      {
+         final Instance other = (Instance) p_o;
+
+         equals = Objects.equals(m_name, other.m_name) && Objects.equals(m_url, other.m_url) &&
+                 Objects.equals(m_version, other.m_version);
+      }
+      return equals;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return Objects.hash(m_name, m_url, m_version);
+   }
+
+   @Override
    public String toString()
    {
-      return Objects.toStringHelper(this).add("name", m_name).add("url", m_url).add("version", m_version).toString();
+      return com.google.common.base.Objects.toStringHelper(this).omitNullValues().add("name", m_name).add("url", m_url)
+              .add("version", m_version).toString();
    }
 
    /**
