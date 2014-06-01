@@ -1,7 +1,12 @@
 
-<div class="col-md-4" ng-repeat="instance in instances">
+<p ng-hide="instances.length">
+    No Jenkins instance configured
+</p>
+
+<div class="col-md-6" ng-repeat="instance in instances">
     <div class="table-responsive">
         <h1>{{instance.name}}</h1>
+
         <table class="table table-striped table-bordered table-condensed table-hover">
             <thead>
             <tr>
@@ -10,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="job in getJobs(instance)">
+            <tr ng-repeat="job in getJobs(instance)" ng-hide="isLastBuildOk(job)">
                 <td class="col-md-1 text-center"><img ng-src="images/{{job.color}}.png" alt="{{job.color}}"/></td>
                 <td>
                     <a href="{{job.url}}" target="_blank">{{job.name}}</a>
