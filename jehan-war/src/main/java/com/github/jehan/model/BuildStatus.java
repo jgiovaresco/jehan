@@ -11,7 +11,11 @@ public enum BuildStatus
    /** Successul build. */
    SUCCESS("blue"),
    /** Failed build. */
-   FAILED("red");
+   FAILED("red"),
+   /** Test Failed build. */
+   TEST_FAILED("yellow"),
+   /** Disabled build. */
+   DISABLED("disabled");
 
    // ------------------------- private members-------------------------
 
