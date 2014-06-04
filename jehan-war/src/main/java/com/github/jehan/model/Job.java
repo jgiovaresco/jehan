@@ -1,8 +1,3 @@
-// -----------------------------------------------------------------------------
-// Projet : jehan
-// Client : Pôle Emploi
-// Auteur : giovarej / Bull S.A.S.
-// -----------------------------------------------------------------------------
 package com.github.jehan.model;
 
 import java.io.Serializable;
