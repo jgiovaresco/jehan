@@ -7,27 +7,26 @@ package com.github.jehan.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.jehan.config.ConfigurationLocator;
 import com.github.jehan.model.Instance;
 import com.github.jehan.model.Job;
 import com.github.jehan.model.builder.InstanceBuilder;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigObject;
 import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigResolveOptions;
 import com.typesafe.config.ConfigSyntax;
 
@@ -44,6 +43,10 @@ public class InstanceServiceImpl implements InstanceService
 
    // ------------------------- private members -------------------------
 
+   /** */
+   @Inject
+   private ConfigurationLocator m_configurationLocator;
+
    /** The job service. */
    @Autowired
    private JobService m_jobService;
@@ -59,7 +62,8 @@ public class InstanceServiceImpl implements InstanceService
    @PostConstruct
    public void initialize()
    {
-      Config m_jenkinsUrl = ConfigFactory.load("jehan", ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON), ConfigResolveOptions.defaults());
+      Config m_jenkinsUrl = ConfigFactory
+              .parseFile(m_configurationLocator.locateConfigurationFile(), ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON));
 
       for (Config co : m_jenkinsUrl.getConfigList("instances"))
       {

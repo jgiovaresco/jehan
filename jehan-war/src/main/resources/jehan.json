@@ -1,12 +1,3 @@
 {
-    "instances": [
-        {
-            "name": "local",
-            "url": "http://localhost:8180/jenkins/"
-        },
-        {
-            "name": "vm07",
-            "url": "http://vm07.lot9.frec.bull.fr:8280/jenkins/"
-        }
-    ]
+    "instances": []
 }
