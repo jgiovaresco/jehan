@@ -79,6 +79,7 @@ public class DefaultConfigurationLocatorImplTest
    @Test
    public void testLocateConfigurationFile_Default() throws Exception
    {
+      System.setProperty("user.home", "");
       assertThat(FileUtils.readFileToString(m_locator.locateConfigurationFile())).isEqualTo("{\"defaut\":\"defaut\"}");
    }
 }
