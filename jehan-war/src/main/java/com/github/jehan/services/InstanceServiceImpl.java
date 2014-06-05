@@ -81,6 +81,7 @@ public class InstanceServiceImpl implements InstanceService
             m_instances.put(name, InstanceBuilder.create().withName(name).withUrl(url).get());
          }
       }
+      LOGGER.info("Instance configured : {}", m_instances);
    }
 
    /**
