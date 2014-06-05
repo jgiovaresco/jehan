@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>jehan</artifactId>
 		<groupId>com.github</groupId>
-		<version>0.2</version>
+		<version>0.3</version>
 	</parent>
 
 	<artifactId>jehan-war</artifactId>
