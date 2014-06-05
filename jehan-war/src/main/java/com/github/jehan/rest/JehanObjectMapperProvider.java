@@ -6,11 +6,13 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig.Feature;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.stereotype.Component;
 
 /**
  * Provider used to create a {@link org.codehaus.jackson.map.ObjectMapper} confirgured.
  */
 @Provider
+@Component
 public class JehanObjectMapperProvider implements ContextResolver<ObjectMapper>
 {
    // ------------------------- private members -------------------------

@@ -7,7 +7,7 @@ import com.github.jehan.model.Instance;
  */
 public class InstanceBuilder
 {
-    // ------------------------- private members -------------------------
+   // ------------------------- private members -------------------------
 
    /** */
    private Instance m_instance;
@@ -22,7 +22,7 @@ public class InstanceBuilder
       m_instance = new Instance();
    }
 
-   // ------------------------- Méthodes public -------------------------
+   // ------------------------- public methods -------------------------
 
    public static InstanceBuilder create()
    {
@@ -52,5 +52,23 @@ public class InstanceBuilder
       return this;
    }
 
-   // ------------------------- Méthodes private -------------------------
+   public InstanceBuilder withSecureActive()
+   {
+      m_instance.setSecure(true);
+      return this;
+   }
+
+   public InstanceBuilder withLogin(String p_login)
+   {
+      m_instance.setLogin(p_login);
+      return this;
+   }
+
+   public InstanceBuilder withToken(String p_token)
+   {
+      m_instance.setToken(p_token);
+      return this;
+   }
+
+   // ------------------------- private methods -------------------------
 }

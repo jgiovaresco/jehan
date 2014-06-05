@@ -27,7 +27,6 @@ import com.github.jehan.model.builder.InstanceBuilder;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigResolveOptions;
 import com.typesafe.config.ConfigSyntax;
 
 /**
@@ -69,7 +68,18 @@ public class InstanceServiceImpl implements InstanceService
       {
          String name = co.getString("name");
          String url = co.getString("url");
-         m_instances.put(name, InstanceBuilder.create().withName(name).withUrl(url).withVersion("1.564").get());
+
+         if (co.hasPath("credentials"))
+         {
+            Config credentials = co.getConfig("credentials");
+            m_instances.put(name,
+                    InstanceBuilder.create().withName(name).withUrl(url).withSecureActive().withLogin(credentials.getString("login"))
+                            .withToken(credentials.getString("token")).get());
+         }
+         else
+         {
+            m_instances.put(name, InstanceBuilder.create().withName(name).withUrl(url).get());
+         }
       }
    }
 
@@ -107,7 +117,6 @@ public class InstanceServiceImpl implements InstanceService
          {
             jobsKo = jobIterator.next().isLastBuildFailed();
          }
-
          if (jobsKo)
          {
             instancesWithJobsKo.add(instance);

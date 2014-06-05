@@ -15,7 +15,9 @@ public enum BuildStatus
    /** Test Failed build. */
    TEST_FAILED("yellow"),
    /** Disabled build. */
-   DISABLED("disabled");
+   DISABLED("disabled") ,
+   /** Inactive build. */
+   INACTIVE("grey");
 
    // ------------------------- private members-------------------------
 
