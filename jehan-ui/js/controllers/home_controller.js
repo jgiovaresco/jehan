@@ -55,4 +55,20 @@ jehanControllers.controller('HomeCtrl', function ($scope, JehanService) {
         // console.debug("isLastBuildOk " + p_job.name + " : " + angular.equals("blue", p_job.color));
         return angular.equals("blue", p_job.color);
     };
+
+    /**
+     * @ngdoc method
+     * @name $scope#$isLastBuildDisabled
+     * @function
+     *
+     * @description Determines if the last build of the job is disabled.
+     *
+     * @param {Object} p_job The job.
+     *
+     * @returns {boolean} true if the last build of the job is disabled, false otherwise.
+     */
+    $scope.isLastBuildDisabled = function (p_job) {
+        // console.debug("isLastBuildOk " + p_job.name + " : " + angular.equals("blue", p_job.color));
+        return angular.equals("disabled", p_job.color) || angular.equals("grey", p_job.color);
+    };
 });

@@ -19,7 +19,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="job in getJobs(instance)" ng-hide="isLastBuildOk(job)">
+            <tr ng-repeat="job in getJobs(instance)" ng-hide="isLastBuildOk(job) || isLastBuildDisabled(job)">
                 <td class="col-md-1 text-center"><img ng-src="images/{{job.color}}.png" alt="{{job.color}}"/></td>
                 <td>
                     <a href="{{job.url}}" target="_blank">{{job.name}}</a>
