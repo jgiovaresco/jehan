@@ -49,9 +49,9 @@ Jehan can be connected to a secured Jenkins server. You must provide credentials
 
 The configuration file could be stored in many places :
 
-* anywhere and provided to Jehan with a System property : -DJEHAN.DIR=<path_to_jehan.json>
-* anywhere and provided to Jehan with an environment variable : JEHAN.DIR=<path_to_jehan.json>
-* in a directory located in the user's home directory : <user.home>/.jehan/jehan.json
-* in the WAR : WEB-INF/classes/jehan.json
+* anywhere and provided to Jehan with a System property : ```-DJEHAN.DIR=<path_to_jehan.json>```
+* anywhere and provided to Jehan with an environment variable : ```JEHAN.DIR=<path_to_jehan.json>```
+* in a directory located in the user's home directory : ```<user.home>/.jehan/jehan.json```
+* in the WAR : ```WEB-INF/classes/jehan.json```
 
 Jehan locates the configuration file using these strategies in that order.
