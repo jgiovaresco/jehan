@@ -68,18 +68,20 @@ public class InstanceServiceImpl implements InstanceService
       {
          String name = co.getString("name");
          String url = co.getString("url");
+         InstanceBuilder builder = InstanceBuilder.create().withName(name).withUrl(url);
 
          if (co.hasPath("credentials"))
          {
             Config credentials = co.getConfig("credentials");
-            m_instances.put(name,
-                    InstanceBuilder.create().withName(name).withUrl(url).withSecureActive().withLogin(credentials.getString("login"))
-                            .withToken(credentials.getString("token")).get());
+            builder.withSecureActive().withLogin(credentials.getString("login")).withToken(credentials.getString("token"));
          }
-         else
+
+         if (co.hasPath("proxy"))
          {
-            m_instances.put(name, InstanceBuilder.create().withName(name).withUrl(url).get());
+            Config proxy = co.getConfig("proxy");
+            builder.withProxyUrl(proxy.getString("url"));
          }
+         m_instances.put(name, builder.get());
       }
       LOGGER.info("Instance configured : {}", m_instances);
    }

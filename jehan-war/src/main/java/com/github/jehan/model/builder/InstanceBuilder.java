@@ -70,5 +70,11 @@ public class InstanceBuilder
       return this;
    }
 
+   public InstanceBuilder withProxyUrl(String p_proxyUrl)
+   {
+      m_instance.setProxyUrl(p_proxyUrl);
+      return this;
+   }
+
    // ------------------------- private methods -------------------------
 }

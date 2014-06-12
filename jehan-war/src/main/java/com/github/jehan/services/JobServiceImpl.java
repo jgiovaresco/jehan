@@ -1,23 +1,18 @@
 package com.github.jehan.services;
 
-import static org.glassfish.jersey.client.authentication.HttpAuthenticationFeature.HTTP_AUTHENTICATION_BASIC_PASSWORD;
-import static org.glassfish.jersey.client.authentication.HttpAuthenticationFeature.HTTP_AUTHENTICATION_BASIC_USERNAME;
-
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ContextResolver;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +21,6 @@ import org.springframework.stereotype.Service;
 import com.github.jehan.model.Instance;
 import com.github.jehan.model.Job;
 import com.github.jehan.model.JobCollection;
-import com.github.jehan.rest.JehanObjectMapperProvider;
 
 /**
  * Implementation of {@link com.github.jehan.services.JobService}
@@ -45,24 +39,8 @@ public class JobServiceImpl implements JobService
    @Autowired
    private ContextResolver<ObjectMapper> m_contextResolver;
 
-   /** The jersey client. */
-   private Client m_client;
-
-   /** The jersey client. */
-   private Client m_securedClient;
-
-   // ------------------------- constructor -------------------------
-
-   /**
-    * Constructor
-    */
-   public JobServiceImpl()
-   {
-      m_client = ClientBuilder.newClient(new ClientConfig().register(JacksonFeature.class)).register(JehanObjectMapperProvider.class);
-      m_securedClient = ClientBuilder.newClient(new ClientConfig().register(JacksonFeature.class))
-              .register(JehanObjectMapperProvider.class);
-      m_securedClient.register(HttpAuthenticationFeature.basicBuilder().build());
-   }
+   /** The map containing the Jersey client for an instance. */
+   private Map<Instance, Client> m_clients = new HashMap<>();
 
    // ------------------------- public methods -------------------------
 
@@ -81,12 +59,6 @@ public class JobServiceImpl implements JobService
       request = getClient(p_instance).target(p_instance.getUrl()).path("/api/json").queryParam("tree", "jobs[name,url,color]")
               .request(MediaType.APPLICATION_JSON_TYPE);
 
-      if (p_instance.isSecure())
-      {
-         request.property(HTTP_AUTHENTICATION_BASIC_USERNAME, p_instance.getLogin())
-                 .property(HTTP_AUTHENTICATION_BASIC_PASSWORD, p_instance.getToken());
-      }
-
       response = request.get();
       jobs = deserializeEntity(response);
 
@@ -103,11 +75,13 @@ public class JobServiceImpl implements JobService
     */
    private Client getClient(Instance p_instance)
    {
-      Client client = m_client;
-      if (p_instance.isSecure())
+      Client client = m_clients.get(p_instance);
+      if (null == client)
       {
-         client = m_securedClient;
+         client = JerseyClientFactory.create(p_instance);
+         m_clients.put(p_instance, client);
       }
+
       return client;
    }
 
@@ -125,6 +99,8 @@ public class JobServiceImpl implements JobService
       JobCollection jobs;
 
       String contentType = p_response.getHeaderString("Content-Type");
+      LOGGER.debug("contentType : {}", contentType);
+
       if (null != contentType && contentType.contains("application/json"))
       {
          jobs = p_response.readEntity(JobCollection.class);
@@ -147,7 +123,7 @@ public class JobServiceImpl implements JobService
       else
       {
          jobs = null;
-         LOGGER.error("Impossible to deserialize entity : the Content-Type is incorrect");
+         LOGGER.error("Impossible to deserialize entity : the Content-Type is incorrect : {}", p_response);
       }
       return jobs;
    }

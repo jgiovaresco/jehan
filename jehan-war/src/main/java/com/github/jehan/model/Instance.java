@@ -19,6 +19,8 @@ public class Instance implements Serializable
    /** The version of the Jenkins server. */
    private String m_version;
 
+   // -- credentials
+
    /** The flag to know if the Jenkins server needs credentials. */
    private boolean m_secure;
 
@@ -27,6 +29,11 @@ public class Instance implements Serializable
 
    /** The token api. */
    private String m_token;
+
+   // -- proxy
+
+   /** The proxy url for the connection to the instance. */
+   private String m_proxyUrl;
 
    // ------------------------- public methods -------------------------
 
@@ -40,7 +47,8 @@ public class Instance implements Serializable
 
          equals = Objects.equals(m_name, other.m_name) && Objects.equals(m_url, other.m_url) &&
                  Objects.equals(m_version, other.m_version) && Objects.equals(m_secure, other.m_secure) &&
-                 Objects.equals(m_login, other.m_login) && Objects.equals(m_token, other.m_token);
+                 Objects.equals(m_login, other.m_login) && Objects.equals(m_token, other.m_token) &&
+                 Objects.equals(m_proxyUrl, other.m_proxyUrl);
       }
       return equals;
    }
@@ -48,14 +56,15 @@ public class Instance implements Serializable
    @Override
    public int hashCode()
    {
-      return Objects.hash(m_name, m_url, m_version, m_secure, m_login, m_token);
+      return Objects.hash(m_name, m_url, m_version, m_secure, m_login, m_token, m_proxyUrl);
    }
 
    @Override
    public String toString()
    {
       return com.google.common.base.Objects.toStringHelper(this).omitNullValues().add("name", m_name).add("url", m_url)
-              .add("version", m_version).add("secure", m_secure).add("login", m_login).add("tokenApi", m_token).toString();
+              .add("version", m_version).add("secure", m_secure).add("login", m_login).add("tokenApi", m_token).add("proxyUrl", m_proxyUrl)
+              .toString();
    }
 
    /**
@@ -164,6 +173,24 @@ public class Instance implements Serializable
    public void setToken(String p_token)
    {
       m_token = p_token;
+   }
+
+   /**
+    * Returns the proxy url.
+    * @return The proxy url.
+    */
+   public String getProxyUrl()
+   {
+      return m_proxyUrl;
+   }
+
+   /**
+    * Sets the proxy url.
+    * @param p_proxyUrl The proxy url.
+    */
+   public void setProxyUrl(String p_proxyUrl)
+   {
+      m_proxyUrl = p_proxyUrl;
    }
 
    // ------------------------- private methods -------------------------
