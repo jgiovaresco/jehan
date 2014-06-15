@@ -2,13 +2,13 @@ var jehanApp = angular.module('jehanApp', ['ngRoute', 'jehan.controllers', 'jeha
 
 jehanApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/home', {
-          templateUrl: '/view/home.html',
+          templateUrl: 'view/home.html',
           controller: 'HomeCtrl' }).
       when('/instances', {
-        templateUrl: '/view/instances.html',
+        templateUrl: 'view/instances.html',
         controller: 'InstancesListCtrl' }).
       when('/jobs/:instanceName?', {
-          templateUrl: '/view/jobs.html',
+          templateUrl: 'view/jobs.html',
           controller: 'JobsCtrl' }).
       otherwise({
           redirectTo: '/home'
