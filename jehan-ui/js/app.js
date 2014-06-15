@@ -1,8 +1,7 @@
-var jehanApp = angular.module('jehanApp', ['ngRoute', 'jehanApp.controllers', 'jehanApp.services']);
+var jehanApp = angular.module('jehanApp', ['ngRoute', 'jehan.controllers', 'jehan.services']);
 
 jehanApp.config(['$routeProvider', function ($routeProvider) {
-  $routeProvider.
-      when('/home', {
+  $routeProvider.when('/home', {
           templateUrl: '/view/home.html',
           controller: 'HomeCtrl' }).
       when('/instances', {
@@ -10,9 +9,36 @@ jehanApp.config(['$routeProvider', function ($routeProvider) {
         controller: 'InstancesListCtrl' }).
       when('/jobs/:instanceName?', {
           templateUrl: '/view/jobs.html',
-          controller: 'JobsCtrl' })
+          controller: 'JobsCtrl' }).
+      otherwise({
+          redirectTo: '/home'
+      })
     ;
 }]);
 
-var jehanControllers = angular.module('jehanApp.controllers', []);
-var jehanServices = angular.module('jehanApp.services', ['ngResource']);
+jehanApp.filter('jobsStatus', function() {
+    return function(p_jobs, p_status) {
+        var items = {
+            status: p_status,
+            out: []
+        };
+
+        angular.forEach(p_jobs, function (p_value) {
+            if (angular.equals("ko", this.status)
+                && (angular.equals(p_value.color, 'red') || angular.equals(p_value.color, 'yellow'))) {
+                this.out.push(p_value);
+            }
+            else if (angular.equals(p_value.color, this.status)) {
+                this.out.push(value);
+            }
+        }, items);
+        return items.out;
+    };
+});
+
+var jehanServices = angular.module('jehan.services', ['ngResource']);
+jehanServices
+    .value('restBaseUrl', '')
+    .value('jehanCtx', {
+        instances: []
+    });
