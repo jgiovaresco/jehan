@@ -35,6 +35,8 @@ app.get('/rest/Instances', function(req, res){
     res.json(instances);
 });
 app.get('/rest/Jobs/:instances', function(req, res) {
-    res.json(jobs[req.params.instances]);
+    setTimeout(function() {
+            res.json(jobs[req.params.instances]);
+        }, 3000);
 });
 module.exports = app;
