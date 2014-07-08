@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>jehan</artifactId>
 		<groupId>com.github</groupId>
+		<artifactId>jehan</artifactId>
 		<version>0.3</version>
 	</parent>
 
