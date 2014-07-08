@@ -8,12 +8,10 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         express: {
-            all: {
+            server: {
                 options: {
                     port: 8080,
-                    hostname: "0.0.0.0",
                     bases: ['jehan-ui'],
-                    livereload: true,
                     middleware: [
                         require('json-proxy').initialize({
                             proxy: {
@@ -22,6 +20,28 @@ module.exports = function (grunt) {
                                 }
                             }
                         })]
+                }
+            },
+            dev: {
+                options: {
+                    port: 8080,
+                    bases: ['jehan-ui'],
+                    middleware: [
+                        require('json-proxy').initialize({
+                            proxy: {
+                                forward: {
+                                    '/rest': 'http://localhost:8280/rest'
+                                }
+                            }
+                        })]
+                }
+            },
+            mockApi: {
+                options: {
+                    port: 8280,
+                    bases: '.tmp',
+                    server: require('path').resolve('./dev/mockRest')
+
                 }
             }
         },
@@ -39,7 +59,13 @@ module.exports = function (grunt) {
 
     // Creates the `server` task
     grunt.registerTask('server', [
-        'express',
+        'express:server',
+        'watch'
+    ]);
+    // Creates the `server` task
+    grunt.registerTask('dev', [
+        'express:dev',
+        'express:mockApi',
         'watch'
     ]);
 };
