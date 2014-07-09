@@ -8,7 +8,7 @@
             <a ng-href="#/jobs/{{instance.name}}" title="Jobs list for {{instance.name}}">Jobs list</a>
         </p>
         <div class="clearfix"></div>
-        <p ng-hide="instance.hasJobsKo()">
+        <p ng-hide="instance.hasJobsKo()" hide-while-loading>
             <span class="glyphicon glyphicon-ok"></span> All jobs OK.
         </p>
     </div>

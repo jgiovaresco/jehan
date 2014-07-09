@@ -7,7 +7,7 @@
     <option value="">-- choose an instance --</option>
 </select>
 
-<p ng-show="null != instanceSelected && 0 == jobs.length">
+<p ng-show="null != instanceSelected && 0 == jobs.length" hide-while-loading>
     No Jobs configured
 </p>
 
