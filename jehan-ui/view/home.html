@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
         <p class="pull-right">
-            <a href="#/jobs/{{instance.name}}" title="Jobs list for {{instance.name}}">Jobs list</a>
+            <a ng-href="#/jobs/{{instance.name}}" title="Jobs list for {{instance.name}}">Jobs list</a>
         </p>
         <div class="clearfix"></div>
         <p ng-hide="instance.hasJobsKo()">
@@ -24,7 +24,7 @@
     <tr ng-repeat="job in instance.jobs | jobsStatus:'ko'">
     <td class="col-md-1 text-center"><img ng-src="images/{{job.color}}.png" alt="{{job.color}}"/></td>
     <td>
-    <a href="{{job.url}}" target="_blank">{{job.name}}</a>
+    <a ng-href="{{job.url}}" target="_blank">{{job.name}}</a>
     </td>
     </tr>
     </tbody>

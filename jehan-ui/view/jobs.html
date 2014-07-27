@@ -23,7 +23,7 @@
         <tr ng-repeat="job in jobs">
             <td class="col-md-1 text-center"><img ng-src="images/{{job.color}}.png" alt="{{job.color}}"/></td>
             <td>
-                <a href="{{job.url}}" target="_blank">{{job.name}}</a>
+                <a ng-href="{{job.url}}" target="_blank">{{job.name}}</a>
             </td>
         </tr>
         </tbody>
