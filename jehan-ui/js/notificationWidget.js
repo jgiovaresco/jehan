@@ -83,7 +83,7 @@ angular.module('notificationWidget', [])
                 return data;
             });
     })
-// declare the directive that will show and hide the loading widget
+    // declare the directive that will show and hide the loading widget
     .directive('loadingWidget', ['requestNotification', function (requestNotification) {
         return {
             restrict: "A",
@@ -107,6 +107,7 @@ angular.module('notificationWidget', [])
             }
         };
     }])
+    // declare the directive that will hide an element when a request starts.
     .directive('hideWhileLoading', ['requestNotification', function (requestNotification) {
         return {
             restrict: "A",
