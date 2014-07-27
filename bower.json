@@ -1,30 +1,31 @@
 {
-  "name": "jehan",
-  "version": "0.0.1",
-  "private": true,
-  "description": "Web interface to administrates severals Jenkins servers",
-  "homepage": "https://github.com/jgiovaresco/jehan",
-  "license": "MIT",
-  "authors": [
-    "jgiovaresco <dev@giovaresco.fr>"
-  ],
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "v1.2.22-build.348+sha.60366c8",
-    "angular-route": "1.2.22-build.348+sha.60366c8",
-    "angular-resource": "1.2.22-build.348+sha.60366c8",
-    "angular-animate": "1.2.22-build.348+sha.60366c8",
-    "angular-loading-bar": "0.5.0",
-    "bootstrap": "~3.1.1",
-    "jquery": "1.11.1"
-  },
-  "resolutions": {
-    "angular": "1.2.22-build.348+sha.60366c8"
-  }
+    "name": "jehan",
+    "version": "0.0.1",
+    "private": true,
+    "description": "Web interface to administrates severals Jenkins servers",
+    "homepage": "https://github.com/jgiovaresco/jehan",
+    "license": "MIT",
+    "authors": [
+        "jgiovaresco <dev@giovaresco.fr>"
+    ],
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "v1.2.22-build.348+sha.60366c8",
+        "angular-route": "1.2.22-build.348+sha.60366c8",
+        "angular-resource": "1.2.22-build.348+sha.60366c8",
+        "angular-animate": "1.2.22-build.348+sha.60366c8",
+        "angular-loading-bar": "0.5.0",
+        "angular-notify-toaster": "0.4.7",
+        "bootstrap": "~3.1.1",
+        "jquery": "1.11.1"
+    },
+    "resolutions": {
+        "angular": "1.2.22-build.348+sha.60366c8"
+    }
 }

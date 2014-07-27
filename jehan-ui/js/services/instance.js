@@ -1,5 +1,5 @@
-jehanServices.factory('Instance', ['$filter', 'jehanService', 'jehanCtx',
-    function ($filter, jehanService, jehanCtx) {
+jehanServices.factory('Instance', ['$filter', 'toaster', 'jehanService', 'jehanCtx',
+    function ($filter, toaster, jehanService, jehanCtx) {
         /**
          * @ngdoc method
          * @name getKoJobsNb
@@ -59,6 +59,11 @@ jehanServices.factory('Instance', ['$filter', 'jehanService', 'jehanCtx',
                             p_instance.koJobsNb = getKoJobsNb(p_instance);
                             p_instance.hasJobsKo = function() {
                                 return this.koJobsNb > 0;
+                            }
+                        }, function (response) {
+                            toaster.pop('error', "Error while getting jobs for " + p_instance.name, response.data, 0);
+                            p_instance.hasJobsKo = function() {
+                                return -1;
                             }
                         });
                     });

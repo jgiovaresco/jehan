@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.jehan.exception.JobsException;
 import com.github.jehan.model.Instance;
 import com.github.jehan.model.Job;
 import com.github.jehan.model.JobCollection;
@@ -59,7 +60,14 @@ public class JobServiceImpl implements JobService
       request = getClient(p_instance).target(p_instance.getUrl()).path("/api/json").queryParam("tree", "jobs[name,url,color]")
               .request(MediaType.APPLICATION_JSON_TYPE);
 
-      response = request.get();
+      try
+      {
+         response = request.get();
+      }
+      catch (Exception e)
+      {
+         throw new JobsException(String.format("Can't get jobs for %s : %s", p_instance.getName(), e.getLocalizedMessage()));
+      }
       jobs = deserializeEntity(response);
 
       LOGGER.debug("end of findAll({}) : {}", p_instance, jobs);

@@ -1,4 +1,4 @@
-var jehanApp = angular.module('jehanApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', 'notificationWidget', 'jehan.controllers', 'jehan.services']);
+var jehanApp = angular.module('jehanApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', 'notificationWidget', 'toaster', 'jehan.controllers', 'jehan.services']);
 
 jehanApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.when('/home', {
