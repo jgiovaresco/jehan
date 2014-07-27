@@ -27,7 +27,20 @@ jehanServices.factory('Instance', ['$filter', 'jehanService', 'jehanCtx',
              * @name getInstances
              * @function
              *
-             * @description Retreives the jenkins instances from the REST service.
+             * @description Retreives the jenkins instances without their jobs from the REST service.
+             *
+             * @returns {Array<Object>} The instances of Jenkins.
+             */
+            getInstances: function () {
+                return jehanService.instances.query();
+            },
+
+            /**
+             * @ngdoc method
+             * @name getInstancesWithJobs
+             * @function
+             *
+             * @description Retreives the jenkins instances with their jobs from the REST service.
              * <p>The instances are store in <code>jehanCtx</code>. When the data are received, for each instances,
              * <ul>
              *     <li>it fetchs their jobs.</li>
@@ -37,7 +50,7 @@ jehanServices.factory('Instance', ['$filter', 'jehanService', 'jehanCtx',
              *
              * @returns {Array<Object>} The instances of Jenkins.
              */
-            getInstances: function () {
+            getInstancesWithJobs: function () {
                 jehanCtx.instances = jehanService.instances.query({}, function () {
                     angular.forEach(jehanCtx.instances, function (p_instance) {
                         // retrieves the jobs
