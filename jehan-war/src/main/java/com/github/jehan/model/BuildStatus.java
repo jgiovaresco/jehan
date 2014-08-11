@@ -17,7 +17,9 @@ public enum BuildStatus
    /** Disabled build. */
    DISABLED("disabled") ,
    /** Inactive build. */
-   INACTIVE("grey");
+   INACTIVE("grey"),
+   /** Not built job. */
+   NOT_BUILT("notbuilt");
 
    // ------------------------- private members-------------------------
 
