@@ -4,7 +4,7 @@
 
 	<groupId>com.github</groupId>
 	<artifactId>jehan</artifactId>
-	<version>0.3</version>
+	<version>0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
