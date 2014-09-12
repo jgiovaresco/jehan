@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.github.jehan.model.Job;
+import com.github.jehan.rest.CacheControl;
 import com.github.jehan.services.InstanceService;
 import com.github.jehan.services.JobService;
 
@@ -51,6 +52,7 @@ public class Jobs
     */
    @GET
    @Path("/{instanceId}")
+   @CacheControl("no-cache")
    public Collection<Job> getAll(@PathParam("instanceId") String p_instanceId)
    {
       LOGGER.debug("getAll jobs of {}", p_instanceId);
