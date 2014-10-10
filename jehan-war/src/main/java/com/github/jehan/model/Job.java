@@ -13,6 +13,13 @@ public class Job implements Serializable
 {
    // ------------------------- private constants -------------------------
 
+   /** The color when build is failed. */
+   private static final String BUILD_FAILED = "red";
+
+   /** The color when tests failed. */
+   private static final String BUILD_TEST_FAILED = "yellow";
+
+
    // ------------------------- private members-------------------------
 
    /** The name. */
@@ -22,7 +29,7 @@ public class Job implements Serializable
    private String m_url;
 
    /** The color. */
-   private BuildStatus m_color;
+   private String m_color;
 
    // ------------------------- public methods -------------------------
 
@@ -42,7 +49,7 @@ public class Job implements Serializable
    @JsonIgnore
    public boolean isLastBuildFailed()
    {
-      return BuildStatus.FAILED == m_color || BuildStatus.TEST_FAILED == m_color;
+      return m_color.startsWith(BUILD_FAILED) || m_color.startsWith(BUILD_TEST_FAILED);
    }
 
    /**
@@ -85,7 +92,7 @@ public class Job implements Serializable
     * Returns the color.
     * @return The color.
     */
-   public BuildStatus getColor()
+   public String getColor()
    {
       return m_color;
    }
@@ -94,7 +101,7 @@ public class Job implements Serializable
     * Sets the color.
     * @param p_color The color.
     */
-   public void setColor(BuildStatus p_color)
+   public void setColor(String p_color)
    {
       m_color = p_color;
    }

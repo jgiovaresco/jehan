@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.reflect.Whitebox;
 
-import com.github.jehan.model.BuildStatus;
 import com.github.jehan.model.Instance;
 import com.github.jehan.model.builder.InstanceBuilder;
 import com.github.jehan.model.builder.JobBuilder;
@@ -75,12 +74,9 @@ public class InstanceServiceImplTest
       m_instancesMap.put("instance2", instance2);
       m_instancesMap.put("instance3", instance3);
 
-      when(m_mockJobService.findAll(instance1))
-              .thenReturn(Arrays.asList(JobBuilder.create().withName("job1").withColor(BuildStatus.SUCCESS).get()));
-      when(m_mockJobService.findAll(instance2))
-              .thenReturn(Arrays.asList(JobBuilder.create().withName("job2").withColor(BuildStatus.FAILED).get()));
-      when(m_mockJobService.findAll(instance3))
-              .thenReturn(Arrays.asList(JobBuilder.create().withName("job3").withColor(BuildStatus.TEST_FAILED).get()));
+      when(m_mockJobService.findAll(instance1)).thenReturn(Arrays.asList(JobBuilder.create().withName("job1").withColor("blue").get()));
+      when(m_mockJobService.findAll(instance2)).thenReturn(Arrays.asList(JobBuilder.create().withName("job2").withColor("red").get()));
+      when(m_mockJobService.findAll(instance3)).thenReturn(Arrays.asList(JobBuilder.create().withName("job3").withColor("yellow").get()));
 
       assertThat(m_service.findAllWithJobsKo()).hasSize(2).contains(instance2, instance3);
    }
