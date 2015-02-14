@@ -31,7 +31,7 @@
       "grunt-contrib-watch": "^0.6.1"
   },
   "scripts": {
-      "postinstall": "bower install",
+      "postinstall": "bower install && grunt build",
       "prestart": "npm install",
       "start": "grunt server"
   }

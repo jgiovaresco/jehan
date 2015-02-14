@@ -176,18 +176,6 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>1.2.1</version>
 				</plugin>
-
-				<!-- IC -->
-				<plugin>
-					<groupId>org.codehaus.sonar</groupId>
-					<artifactId>sonar-maven3-plugin</artifactId>
-					<version>2.11</version>
-				</plugin>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.6.2.201302030002</version>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -204,7 +192,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<executable>bower</executable>
+					<executable>npm</executable>
 					<arguments>
 						<argument>install</argument>
 					</arguments>
@@ -215,23 +203,7 @@
 				<configuration>
 					<webResources>
 						<resource>
-							<directory>../jehan-ui</directory>
-							<excludes>
-								<exclude>*.iml</exclude>
-								<exclude>**/*.md</exclude>
-								<exclude>**/.bower.*</exclude>
-								<exclude>**/bower.*</exclude>
-								<exclude>**/Gruntfile.*</exclude>
-								<exclude>**/package.*</exclude>
-								<exclude>**/LICENSE</exclude>
-								<exclude>**/*.min.*</exclude>
-								<exclude>**/bootstrap/fonts/</exclude>
-								<exclude>**/bootstrap/grunt/</exclude>
-								<exclude>**/bootstrap/js/</exclude>
-								<exclude>**/bootstrap/less/</exclude>
-								<exclude>**/bootstrap/test-infra/</exclude>
-								<exclude>**/jquery/</exclude>
-							</excludes>
+							<directory>../jehan-ui/dist</directory>
 						</resource>
 					</webResources>
 				</configuration>
