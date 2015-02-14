@@ -99,7 +99,7 @@ module.exports = function (grunt) {
                         require('json-proxy').initialize({
                             proxy: {
                                 forward: {
-                                    '/rest': 'http://localhost:8280/rest'
+                                    '/rest': 'http://localhost:8280/'
                                 }
                             }
                         })]
