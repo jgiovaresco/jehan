@@ -2,15 +2,34 @@
 <html ng-app="jehanApp">
 <head>
     <title>Jehan</title>
-    <link href="css/<%= grunt.config.get('pkg.name') %>.css" rel="stylesheet" type="text/css"/>
+	<!-- build:css css/jehan.css -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="bower_components/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet" type="text/css"/>
+    <link href="bower_components/angular-notify-toaster/toaster.css" rel="stylesheet" type="text/css"/>
+    <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+	<!-- endbuild -->
 
+	<!-- build:js js/jehan.js -->
+    <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+    <script src="bower_components/angular/angular.js" type="text/javascript"></script>
+    <script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+    <script src="bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
+    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js" type="text/javascript"></script>
+    <script src="bower_components/angular-notify-toaster/toaster.js" type="text/javascript"></script>
 
-    <script src="js/jquery.js" type="text/javascript"></script>
-    <script src="js/angular.js" type="text/javascript"></script>
-    <script src="js/<%= grunt.config.get('pkg.name') %>.js" type="text/javascript"></script>
+    <script src="app/app.js" type="text/javascript"></script>
+    <script src="common/services/instance.js" type="text/javascript"></script>
+    <script src="common/services/jehan_service.js" type="text/javascript"></script>
+    <script src="common/widgets/notificationWidget.js" type="text/javascript"></script>
+    <script src="app/home/home.js" type="text/javascript"></script>
+    <script src="app/instances/instances.js" type="text/javascript"></script>
+    <script src="app/jobs/jobs.js" type="text/javascript"></script>
+	<!-- endbuild -->
 
 </head>
 <body ng-controller="MainCtrl">
+
 <div role="navigation" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">

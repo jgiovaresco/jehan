@@ -31,12 +31,17 @@ var jobs = {
     Jenkins4 : [{"name":"jobs41","url":"","color":"red"},{"name":"jobs42","url":"","color":"blue"}]
 };
 
+console.log("Instance : ", instances);
+console.log("Jobs : ", jobs);
+
 app.get('/rest/Instances', function(req, res){
     res.json(instances);
 });
 app.get('/rest/Jobs/:instances', function(req, res) {
-    setTimeout(function() {
-            res.json(jobs[req.params.instances]);
-        }, 3000);
+	res.json(jobs[req.params.instances]);
+//	setTimeout(function() {
+//            res.json(jobs[req.params.instances]);
+//        }, 3000);
 });
-module.exports = app;
+
+app.listen(8280);

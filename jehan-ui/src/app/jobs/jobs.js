@@ -2,7 +2,7 @@ angular.module('jehan.jobs', ['jehan.services'])
 
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/jobs/:instanceName?', {
-        templateUrl: 'view/jobs/jobs.tpl.html',
+        templateUrl: 'app/jobs/jobs.tpl.html',
         controller: 'JobsCtrl' })
     ;
 }])

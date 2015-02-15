@@ -2,7 +2,7 @@ angular.module('jehan.instances', ['jehan.services'])
 
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/instances', {
-        templateUrl: 'view/instances/instances.tpl.html',
+        templateUrl: 'app/instances/instances.tpl.html',
         controller: 'InstancesListCtrl' })
     ;
 }])

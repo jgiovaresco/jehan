@@ -2,7 +2,7 @@ angular.module('jehan.home', ['jehan.services'])
 
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/home', {
-        templateUrl: 'view/home/home.tpl.html',
+        templateUrl: 'app/home/home.tpl.html',
         controller: 'HomeCtrl' })
     ;
 }])
