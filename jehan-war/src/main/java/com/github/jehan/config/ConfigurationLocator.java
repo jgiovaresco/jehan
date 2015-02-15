@@ -8,9 +8,10 @@ import java.io.File;
  */
 public interface ConfigurationLocator
 {
-   /**
-    * Locates the configuration file.
-    * @return The configuration file found.
-    */
-   File locateConfigurationFile();
+	/**
+	 * Locates the configuration file.
+	 *
+	 * @return The configuration file found.
+	 */
+	File locateConfigurationFile();
 }

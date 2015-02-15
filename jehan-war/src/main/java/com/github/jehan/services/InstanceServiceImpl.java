@@ -35,112 +35,115 @@ import com.typesafe.config.ConfigSyntax;
 @Service
 public class InstanceServiceImpl implements InstanceService
 {
-   // ------------------------- private constants -------------------------
+	// ------------------------- private constants -------------------------
 
-   /** The logger. */
-   private static final Logger LOGGER = LoggerFactory.getLogger(InstanceServiceImpl.class);
+	/** The logger. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(InstanceServiceImpl.class);
 
-   // ------------------------- private members -------------------------
+	// ------------------------- private members -------------------------
 
-   /** */
-   @Inject
-   private ConfigurationLocator m_configurationLocator;
+	/** */
+	@Inject
+	private ConfigurationLocator m_configurationLocator;
 
-   /** The job service. */
-   @Autowired
-   private JobService m_jobService;
+	/** The job service. */
+	@Autowired
+	private JobService m_jobService;
 
-   /** The instances configured. */
-   private Map<String, Instance> m_instances = new TreeMap<>();
+	/** The instances configured. */
+	private Map<String, Instance> m_instances = new TreeMap<>();
 
-   // ------------------------- public methods -------------------------
+	// ------------------------- public methods -------------------------
 
-   /**
-    * Initialize the service.
-    */
-   @PostConstruct
-   public void initialize()
-   {
-      Config m_jenkinsUrl = ConfigFactory
-              .parseFile(m_configurationLocator.locateConfigurationFile(), ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON));
+	/**
+	 * Initialize the service.
+	 */
+	@PostConstruct
+	public void initialize()
+	{
+		Config m_jenkinsUrl = ConfigFactory
+				.parseFile(m_configurationLocator.locateConfigurationFile(), ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON));
 
-      for (Config co : m_jenkinsUrl.getConfigList("instances"))
-      {
-         String name = co.getString("name");
-         String url = co.getString("url");
-         InstanceBuilder builder = InstanceBuilder.create().withName(name).withUrl(url);
+		for (Config co : m_jenkinsUrl.getConfigList("instances"))
+		{
+			String name = co.getString("name");
+			String url = co.getString("url");
+			InstanceBuilder builder = InstanceBuilder.create().withName(name).withUrl(url);
 
-         if (co.hasPath("credentials"))
-         {
-            Config credentials = co.getConfig("credentials");
-            builder.withSecureActive().withLogin(credentials.getString("login")).withToken(credentials.getString("token"));
-         }
+			if (co.hasPath("credentials"))
+			{
+				Config credentials = co.getConfig("credentials");
+				builder.withSecureActive().withLogin(credentials.getString("login")).withToken(credentials.getString("token"));
+			}
 
-         if (co.hasPath("proxy"))
-         {
-            Config proxy = co.getConfig("proxy");
-            builder.withProxyUrl(proxy.getString("url"));
-         }
-         m_instances.put(name, builder.get());
-      }
-      LOGGER.info("Instance configured : {}", m_instances);
-   }
+			if (co.hasPath("proxy"))
+			{
+				Config proxy = co.getConfig("proxy");
+				builder.withProxyUrl(proxy.getString("url"));
+			}
+			m_instances.put(name, builder.get());
+		}
+		LOGGER.info("Instance configured : {}", m_instances);
+	}
 
-   /**
-    * {@inheritDoc}
-    * @see InstanceService#findAll()
-    */
-   @Override
-   public Collection<Instance> findAll()
-   {
-      LOGGER.debug("start of findAll()");
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see InstanceService#findAll()
+	 */
+	@Override
+	public Collection<Instance> findAll()
+	{
+		LOGGER.debug("start of findAll()");
 
-      Collection<Instance> instances = m_instances.values();
+		Collection<Instance> instances = m_instances.values();
 
-      LOGGER.debug("end of findAll() : {}", instances);
-      return instances;
-   }
+		LOGGER.debug("end of findAll() : {}", instances);
+		return instances;
+	}
 
-   /**
-    * {@inheritDoc}
-    * @see com.github.jehan.services.InstanceService#findAllWithJobsKo()
-    */
-   @Override
-   public Collection<Instance> findAllWithJobsKo()
-   {
-      List<Instance> instancesWithJobsKo = new ArrayList<>();
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see com.github.jehan.services.InstanceService#findAllWithJobsKo()
+	 */
+	@Override
+	public Collection<Instance> findAllWithJobsKo()
+	{
+		List<Instance> instancesWithJobsKo = new ArrayList<>();
 
-      for (Instance instance : m_instances.values())
-      {
-         Collection<Job> jobs = m_jobService.findAll(instance);
-         Iterator<Job> jobIterator = jobs.iterator();
-         boolean jobsKo = false;
+		for (Instance instance : m_instances.values())
+		{
+			Collection<Job> jobs = m_jobService.findAll(instance);
+			Iterator<Job> jobIterator = jobs.iterator();
+			boolean jobsKo = false;
 
-         while (!jobsKo && jobIterator.hasNext())
-         {
-            jobsKo = jobIterator.next().isLastBuildFailed();
-         }
-         if (jobsKo)
-         {
-            instancesWithJobsKo.add(instance);
-         }
-      }
+			while (!jobsKo && jobIterator.hasNext())
+			{
+				jobsKo = jobIterator.next().isLastBuildFailed();
+			}
+			if (jobsKo)
+			{
+				instancesWithJobsKo.add(instance);
+			}
+		}
 
-      return instancesWithJobsKo;
-   }
+		return instancesWithJobsKo;
+	}
 
-   /**
-    * {@inheritDoc}
-    * @see InstanceService#findById(String)
-    */
-   @Override
-   public Instance findById(String p_id)
-   {
-      LOGGER.debug("start of findById() with {}", p_id);
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see InstanceService#findById(String)
+	 */
+	@Override
+	public Instance findById(String p_id)
+	{
+		LOGGER.debug("start of findById() with {}", p_id);
 
-      Instance instance = m_instances.get(p_id);
+		Instance instance = m_instances.get(p_id);
 
-      LOGGER.debug("end of findById({}) : {}", p_id, instance);
-      return instance;
-   }
+		LOGGER.debug("end of findById({}) : {}", p_id, instance);
+		return instance;
+	}
 }

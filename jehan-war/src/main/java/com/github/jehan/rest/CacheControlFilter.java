@@ -17,23 +17,23 @@ import org.apache.http.HttpHeaders;
 @CacheControl
 public class CacheControlFilter implements ContainerResponseFilter
 {
-   // ------------------------- Membres private -------------------------
-   // ------------------------- Constructeur -------------------------
-   // ------------------------- Méthodes public -------------------------
+	// ------------------------- Membres private -------------------------
+	// ------------------------- Constructeur -------------------------
+	// ------------------------- Méthodes public -------------------------
 
-   @Override
-   public void filter(ContainerRequestContext p_RequestContext, ContainerResponseContext p_ResponseContext) throws IOException
-   {
-      for (Annotation a : p_ResponseContext.getEntityAnnotations())
-      {
-         if (a.annotationType() == CacheControl.class)
-         {
-            String value = ((CacheControl) a).value();
-            p_ResponseContext.getHeaders().putSingle(HttpHeaders.CACHE_CONTROL, value);
-            break;
-         }
-      }
-   }
+	@Override
+	public void filter(ContainerRequestContext p_RequestContext, ContainerResponseContext p_ResponseContext) throws IOException
+	{
+		for (Annotation a : p_ResponseContext.getEntityAnnotations())
+		{
+			if (a.annotationType() == CacheControl.class)
+			{
+				String value = ((CacheControl) a).value();
+				p_ResponseContext.getHeaders().putSingle(HttpHeaders.CACHE_CONTROL, value);
+				break;
+			}
+		}
+	}
 
-   // ------------------------- Méthodes private -------------------------
+	// ------------------------- Méthodes private -------------------------
 }

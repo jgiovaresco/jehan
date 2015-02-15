@@ -11,42 +11,42 @@ import com.github.jehan.model.JobCollection;
  */
 public class JobCollectionBuilder
 {
-   // ------------------------- private members -------------------------
+	// ------------------------- private members -------------------------
 
-   /** */
-   private JobCollection m_jobCollection;
+	/** */
+	private JobCollection m_jobCollection;
 
-   // ------------------------- constructor -------------------------
+	// ------------------------- constructor -------------------------
 
-   /**
-    * Constructor.
-    */
-   private JobCollectionBuilder()
-   {
-      m_jobCollection = new JobCollection();
-   }
+	/**
+	 * Constructor.
+	 */
+	private JobCollectionBuilder()
+	{
+		m_jobCollection = new JobCollection();
+	}
 
-   // ------------------------- Méthodes public -------------------------
+	// ------------------------- Méthodes public -------------------------
 
-   public static JobCollectionBuilder create()
-   {
-      return new JobCollectionBuilder();
-   }
+	public static JobCollectionBuilder create()
+	{
+		return new JobCollectionBuilder();
+	}
 
-   public JobCollection get()
-   {
-      return m_jobCollection;
-   }
+	public JobCollection get()
+	{
+		return m_jobCollection;
+	}
 
-   public JobCollectionBuilder addJob(Job p_job)
-   {
-      if (null == m_jobCollection.getJobs())
-      {
-         m_jobCollection.setJobs(new ArrayList<Job>());
-      }
-      m_jobCollection.getJobs().add(p_job);
-      return this;
-   }
+	public JobCollectionBuilder addJob(Job p_job)
+	{
+		if (null == m_jobCollection.getJobs())
+		{
+			m_jobCollection.setJobs(new ArrayList<Job>());
+		}
+		m_jobCollection.getJobs().add(p_job);
+		return this;
+	}
 
-   // ------------------------- Méthodes private -------------------------
+	// ------------------------- Méthodes private -------------------------
 }

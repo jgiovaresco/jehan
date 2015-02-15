@@ -9,22 +9,25 @@ import java.util.Collection;
  */
 public interface InstanceService
 {
-    /**
-     * Retrieves all Jenkins server instances.
-     * @return All Jenkins server instances.
-     */
-    Collection<Instance> findAll();
+	/**
+	 * Retrieves all Jenkins server instances.
+	 *
+	 * @return All Jenkins server instances.
+	 */
+	Collection<Instance> findAll();
 
-   /**
-    * Retrieves all Jenkins server instances with jobs KO.
-    * @return All Jenkins server instances with jobs KO.
-    */
-   Collection<Instance> findAllWithJobsKo();
+	/**
+	 * Retrieves all Jenkins server instances with jobs KO.
+	 *
+	 * @return All Jenkins server instances with jobs KO.
+	 */
+	Collection<Instance> findAllWithJobsKo();
 
-   /**
-    * Retrieve a Jenkins server instance for its id.
-    * @param p_Id The id.
-    * @return The {@link com.github.jehan.model.Instance} or null.
-    */
-   Instance findById(String p_Id);
+	/**
+	 * Retrieve a Jenkins server instance for its id.
+	 *
+	 * @param p_Id The id.
+	 * @return The {@link com.github.jehan.model.Instance} or null.
+	 */
+	Instance findById(String p_Id);
 }

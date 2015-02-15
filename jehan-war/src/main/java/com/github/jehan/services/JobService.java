@@ -10,10 +10,11 @@ import com.github.jehan.model.Job;
  */
 public interface JobService
 {
-   /**
-    * Retrieves all jobs of a Jenkins instance.
-    * @param p_instance The Jenkins instance.
-    * @return The jobs of the Jenkins instance.
-    */
-   Collection<Job> findAll(Instance p_instance);
+	/**
+	 * Retrieves all jobs of a Jenkins instance.
+	 *
+	 * @param p_instance The Jenkins instance.
+	 * @return The jobs of the Jenkins instance.
+	 */
+	Collection<Job> findAll(Instance p_instance);
 }

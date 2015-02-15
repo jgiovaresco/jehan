@@ -11,9 +11,9 @@ import javax.ws.rs.NameBinding;
  * Annotation to handle HTTP Header for cache control
  */
 @NameBinding
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CacheControl
 {
-   String value() default "public, must-revalidate";
+	String value() default "public, must-revalidate";
 }

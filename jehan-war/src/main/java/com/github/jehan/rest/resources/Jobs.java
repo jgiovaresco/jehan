@@ -26,38 +26,39 @@ import com.github.jehan.services.JobService;
 @Service
 public class Jobs
 {
-   // ------------------------- private constants -------------------------
+	// ------------------------- private constants -------------------------
 
-   /** The logger. */
-   private static final Logger LOGGER = LoggerFactory.getLogger(Jobs.class);
+	/** The logger. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(Jobs.class);
 
-   // ------------------------- private members -------------------------
+	// ------------------------- private members -------------------------
 
-   /** */
-   @Inject
-   private InstanceService m_instanceService;
+	/** */
+	@Inject
+	private InstanceService m_instanceService;
 
-   /** */
-   @Inject
-   private JobService m_jobService;
+	/** */
+	@Inject
+	private JobService m_jobService;
 
-   // ------------------------- constructor -------------------------
+	// ------------------------- constructor -------------------------
 
-   // ------------------------- public methods -------------------------
+	// ------------------------- public methods -------------------------
 
-   /**
-    * Find all Jenkins server instances.
-    * @param p_instanceId The instance id.
-    * @return All Jenkins server instances.
-    */
-   @GET
-   @Path("/{instanceId}")
-   @CacheControl("no-cache")
-   public Collection<Job> getAll(@PathParam("instanceId") String p_instanceId)
-   {
-      LOGGER.debug("getAll jobs of {}", p_instanceId);
-      return m_jobService.findAll(m_instanceService.findById(p_instanceId));
-   }
+	/**
+	 * Find all Jenkins server instances.
+	 *
+	 * @param p_instanceId The instance id.
+	 * @return All Jenkins server instances.
+	 */
+	@GET
+	@Path("/{instanceId}")
+	@CacheControl("no-cache")
+	public Collection<Job> getAll(@PathParam("instanceId") String p_instanceId)
+	{
+		LOGGER.debug("getAll jobs of {}", p_instanceId);
+		return m_jobService.findAll(m_instanceService.findById(p_instanceId));
+	}
 
-   // ------------------------- private methods -------------------------
+	// ------------------------- private methods -------------------------
 }

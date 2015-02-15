@@ -27,65 +27,66 @@ import com.github.jehan.services.InstanceService;
 @Service
 public class Instances
 {
-   // ------------------------- private constants -------------------------
+	// ------------------------- private constants -------------------------
 
-   /** The name of the parameter used to filter Jenkins instances. */
-   private static final String FILTER_PARAMETER = "filter";
+	/** The name of the parameter used to filter Jenkins instances. */
+	private static final String FILTER_PARAMETER = "filter";
 
-   /** The value of the filter parameter used to get only the instance with jobs KO. */
-   private static final String JOBS_KO_FILTER_PARAMETER = "jobsKO";
+	/** The value of the filter parameter used to get only the instance with jobs KO. */
+	private static final String JOBS_KO_FILTER_PARAMETER = "jobsKO";
 
 
-   // --- logs
+	// --- logs
 
-   /** The logger. */
-   private static final Logger LOGGER = LoggerFactory.getLogger(Instances.class);
+	/** The logger. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(Instances.class);
 
-   // ------------------------- private members -------------------------
+	// ------------------------- private members -------------------------
 
-   /** */
-   @Inject
-   private InstanceService m_instanceService;
+	/** */
+	@Inject
+	private InstanceService m_instanceService;
 
-   /** Provides URI information. */
-   @Context
-   private UriInfo m_UriInfo;
+	/** Provides URI information. */
+	@Context
+	private UriInfo m_UriInfo;
 
-   // ------------------------- constructor -------------------------
+	// ------------------------- constructor -------------------------
 
-   // ------------------------- public methods -------------------------
+	// ------------------------- public methods -------------------------
 
-   /**
-    * Find all Jenkins server instances.
-    * @return All Jenkins server instances.
-    */
-   @GET
-   public Collection<Instance> getAll()
-   {
-      Collection<Instance> instances;
+	/**
+	 * Find all Jenkins server instances.
+	 *
+	 * @return All Jenkins server instances.
+	 */
+	@GET
+	public Collection<Instance> getAll()
+	{
+		Collection<Instance> instances;
 
-      LOGGER.debug("getAll instances");
+		LOGGER.debug("getAll instances");
 
-      MultivaluedMap<String, String> params = m_UriInfo.getQueryParameters();
-      if (null == params || params.isEmpty())
-      {
-         instances = m_instanceService.findAll();
-      }
-      else
-      {
-         String value = params.getFirst(FILTER_PARAMETER);
-         if (null != value && JOBS_KO_FILTER_PARAMETER.equals(value))
-         {
-            instances = m_instanceService.findAllWithJobsKo();
-         }
-         else
-         {
-            throw new BadRequestException();
-         }
-      }
+		MultivaluedMap<String, String> params = m_UriInfo.getQueryParameters();
+		if (null == params || params.isEmpty())
+		{
+			instances = m_instanceService.findAll();
+		}
+		else
+		{
+			String value = params.getFirst(FILTER_PARAMETER);
+			if (null != value && JOBS_KO_FILTER_PARAMETER.equals(value))
+			{
+				instances = m_instanceService.findAllWithJobsKo();
+			}
+			else
+			{
+				throw new BadRequestException();
+			}
+		}
 
-      return instances;
-   }
+		return instances;
+	}
 
-   // ------------------------- private methods -------------------------
+	// ------------------------- private methods -------------------------
 }

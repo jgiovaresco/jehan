@@ -12,29 +12,29 @@ import org.slf4j.LoggerFactory;
  */
 public class JehanApplication extends ResourceConfig
 {
-   // ------------------------- private constants -------------------------
+	// ------------------------- private constants -------------------------
 
-   /** The logger. */
-   private static final Logger LOGGER = LoggerFactory.getLogger(JehanApplication.class);
+	/** The logger. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(JehanApplication.class);
 
-   // ------------------------- constructor -------------------------
+	// ------------------------- constructor -------------------------
 
-   /**
-    * Constructeur.
-    */
-   public JehanApplication()
-   {
-      LOGGER.info("Initialisation of Jersey application.");
+	/**
+	 * Constructeur.
+	 */
+	public JehanApplication()
+	{
+		LOGGER.info("Initialisation of Jersey application.");
 
-      if (true == LOGGER.isDebugEnabled())
-      {
-         register(new LoggingFilter(java.util.logging.Logger.getLogger("rest_request"), false));
-      }
-      register(RequestContextFilter.class);
-      packages("com.github.jehan.rest.resources");
+		if (true == LOGGER.isDebugEnabled())
+		{
+			register(new LoggingFilter(java.util.logging.Logger.getLogger("rest_request"), false));
+		}
+		register(RequestContextFilter.class);
+		packages("com.github.jehan.rest.resources");
 
-      // pour Jackson
-      register(JehanObjectMapperProvider.class);
-      register(JacksonFeature.class);
-   }
+		// pour Jackson
+		register(JehanObjectMapperProvider.class);
+		register(JacksonFeature.class);
+	}
 }
