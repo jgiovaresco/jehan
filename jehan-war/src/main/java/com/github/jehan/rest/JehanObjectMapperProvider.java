@@ -1,15 +1,15 @@
 package com.github.jehan.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.stereotype.Component;
+
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig.Feature;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.springframework.stereotype.Component;
-
 /**
- * Provider used to create a {@link org.codehaus.jackson.map.ObjectMapper} confirgured.
+ * Provider used to create a {@link ObjectMapper} confirgured.
  */
 @Provider
 @Component
@@ -17,7 +17,7 @@ public class JehanObjectMapperProvider implements ContextResolver<ObjectMapper>
 {
 	// ------------------------- private members -------------------------
 
-	/** The {@link org.codehaus.jackson.map.ObjectMapper} to use. */
+	/** The {@link ObjectMapper} to use. */
 	private final ObjectMapper m_DefaultObjectMapper;
 
 	// ------------------------- constructor -------------------------
@@ -45,16 +45,15 @@ public class JehanObjectMapperProvider implements ContextResolver<ObjectMapper>
 	// ------------------------- private methods -------------------------
 
 	/**
-	 * Build and configure the {@link org.codehaus.jackson.map.ObjectMapper} to use.
+	 * Build and configure the {@link ObjectMapper} to use.
 	 *
-	 * @return The {@link org.codehaus.jackson.map.ObjectMapper} to use.
+	 * @return The {@link ObjectMapper} to use.
 	 */
 	private static ObjectMapper createDefaultMapper()
 	{
 		ObjectMapper result = new ObjectMapper();
-		result.configure(Feature.INDENT_OUTPUT, true);
-		result.configure(Feature.SORT_PROPERTIES_ALPHABETICALLY, true);
-		result.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+		result.enable(SerializationFeature.INDENT_OUTPUT);
+		result.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		return result;
 	}
