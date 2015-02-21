@@ -1,6 +1,12 @@
 package com.github.jehan.rest.resources;
 
-import java.util.Collection;
+import com.github.jehan.model.Job;
+import com.github.jehan.rest.CacheControl;
+import com.github.jehan.services.InstanceService;
+import com.github.jehan.services.JobService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -8,15 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import com.github.jehan.model.Job;
-import com.github.jehan.rest.CacheControl;
-import com.github.jehan.services.InstanceService;
-import com.github.jehan.services.JobService;
+import java.util.Collection;
 
 /**
  * Defines the resources used to get Jobs.
@@ -57,7 +55,7 @@ public class Jobs
 	public Collection<Job> getAll(@PathParam("instanceId") String p_instanceId)
 	{
 		LOGGER.debug("getAll jobs of {}", p_instanceId);
-		return m_jobService.findAll(m_instanceService.findById(p_instanceId));
+		return m_jobService.findAll(m_instanceService.findByName(p_instanceId));
 	}
 
 	// ------------------------- private methods -------------------------

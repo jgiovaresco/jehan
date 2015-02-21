@@ -1,12 +1,14 @@
 package com.github.jehan.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Defines a Jenkins' server instance.
  */
-public class Instance implements Serializable
+public class Instance implements Serializable, Cloneable
 {
 	// ------------------------- private members -------------------------
 
@@ -35,7 +37,38 @@ public class Instance implements Serializable
 	/** The proxy url for the connection to the instance. */
 	private String m_proxyUrl;
 
+	// -- jobs
+
+	/** Jobs of the Jenkins server. */
+	private List<Job> m_jobs;
+
+	// ------------------------- Constructors -------------------------
+
+	/**
+	 * Empty constructor.
+	 */
+	public Instance()
+	{
+		m_jobs = new ArrayList<>();
+	}
+
 	// ------------------------- public methods -------------------------
+
+	@Override
+	public final Instance clone()
+	{
+		Instance clone = null;
+		try
+		{
+			clone = (Instance) super.clone();
+			clone.setJobs(new ArrayList<Job>());
+		}
+		catch (CloneNotSupportedException e)
+		{
+			// Should not happen
+		}
+		return clone;
+	}
 
 	@Override
 	public boolean equals(Object p_o)
@@ -205,6 +238,26 @@ public class Instance implements Serializable
 	public void setProxyUrl(String p_proxyUrl)
 	{
 		m_proxyUrl = p_proxyUrl;
+	}
+
+	/**
+	 * Returns the jobs list.
+	 *
+	 * @return The jobs list.
+	 */
+	public List<Job> getJobs()
+	{
+		return m_jobs;
+	}
+
+	/**
+	 * Sets the jobs list.
+	 *
+	 * @param p_jobs The jobs list.
+	 */
+	public void setJobs(List<Job> p_jobs)
+	{
+		m_jobs = p_jobs;
 	}
 
 	// ------------------------- private methods -------------------------

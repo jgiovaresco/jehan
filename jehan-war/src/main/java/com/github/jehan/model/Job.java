@@ -1,10 +1,9 @@
 package com.github.jehan.model;
 
-import java.io.Serializable;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
+
+import java.io.Serializable;
 
 /**
  * Defines a Jenkins job.
@@ -32,6 +31,27 @@ public class Job implements Serializable
 	private String m_color;
 
 	// ------------------------- public methods -------------------------
+
+	@Override
+	public boolean equals(Object p_o)
+	{
+		boolean equals = false;
+		if (null != p_o && getClass() == p_o.getClass())
+		{
+			final Job other = (Job) p_o;
+
+			equals = java.util.Objects.equals(m_name, other.m_name) && java.util.Objects.equals(m_url, other.m_url) &&
+			         java.util.Objects.equals(m_color, other.m_color);
+		}
+		return equals;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return java.util.Objects.hash(m_name, m_url, m_color);
+	}
+
 
 	@Override
 	public String toString()

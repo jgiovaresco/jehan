@@ -1,6 +1,7 @@
 package com.github.jehan.model.builder;
 
 import com.github.jehan.model.Instance;
+import com.github.jehan.model.Job;
 
 /**
  * The builder for {@link com.github.jehan.model.Instance}
@@ -73,6 +74,12 @@ public class InstanceBuilder
 	public InstanceBuilder withProxyUrl(String p_proxyUrl)
 	{
 		m_instance.setProxyUrl(p_proxyUrl);
+		return this;
+	}
+
+	public InstanceBuilder withJob(Job p_job)
+	{
+		m_instance.getJobs().add(p_job);
 		return this;
 	}
 

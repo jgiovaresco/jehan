@@ -1,6 +1,11 @@
 package com.github.jehan.rest.resources;
 
-import java.util.Collection;
+import com.github.jehan.model.Instance;
+import com.github.jehan.services.InstanceService;
+import org.glassfish.jersey.internal.util.collection.MultivaluedStringMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
@@ -11,13 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import com.github.jehan.model.Instance;
-import com.github.jehan.services.InstanceService;
+import java.util.Collection;
 
 /**
  * Defines the resources used to get Jenkins' instances servers.
@@ -32,10 +31,6 @@ public class Instances
 	/** The name of the parameter used to filter Jenkins instances. */
 	private static final String FILTER_PARAMETER = "filter";
 
-	/** The value of the filter parameter used to get only the instance with jobs KO. */
-	private static final String JOBS_KO_FILTER_PARAMETER = "jobsKO";
-
-
 	// --- logs
 
 	/** The logger. */
@@ -49,35 +44,57 @@ public class Instances
 
 	/** Provides URI information. */
 	@Context
-	private UriInfo m_UriInfo;
+	private UriInfo m_uriInfo;
 
-	// ------------------------- constructor -------------------------
+	// ------------------------- constructors -------------------------
 
 	// ------------------------- public methods -------------------------
 
 	/**
 	 * Find all Jenkins server instances.
+	 * <p>Query string allowed :</p>
+	 * <ul>
+	 * <li>filter : used to select an attribute of {@link com.github.jehan.model.Instance} to filter instances. <br />
+	 * Values accepted : <code>name, jobs</code>
+	 * </li>
+	 * <li>The filter's value :
+	 * <ul>
+	 * <li>for simple attribute, the parameter's name is the attribute itself and the parameter's value is the value used to filter instances. <br />
+	 * Ex: to filter on instance' name : <code>name=my_name</code></li>
+	 * <li>for object attribute, the parameter's name is an attribute of the object and the parameter's value is the value used to filter instances. <br />
+	 * Ex: to filter on job's status : <code>color=red&color=yellow</code></li>
+	 * </ul>
+	 * </li>
+	 * </ul>
 	 *
 	 * @return All Jenkins server instances.
 	 */
 	@GET
-	public Collection<Instance> getAll()
+	public Collection<Instance> findAll()
 	{
 		Collection<Instance> instances;
 
-		LOGGER.debug("getAll instances");
+		LOGGER.debug("findAll instances");
 
-		MultivaluedMap<String, String> params = m_UriInfo.getQueryParameters();
-		if (null == params || params.isEmpty())
+		MultivaluedMap<String, String> params = new MultivaluedStringMap(m_uriInfo.getQueryParameters());
+		if (params.isEmpty())
 		{
 			instances = m_instanceService.findAll();
 		}
 		else
 		{
-			String value = params.getFirst(FILTER_PARAMETER);
-			if (null != value && JOBS_KO_FILTER_PARAMETER.equals(value))
+			String filter = params.getFirst(FILTER_PARAMETER);
+			if (null != filter)
 			{
-				instances = m_instanceService.findAllWithJobsKo();
+				params.remove(FILTER_PARAMETER);
+				if (!params.isEmpty())
+				{
+					instances = m_instanceService.findInstancesWithFilter(filter, params);
+				}
+				else
+				{
+					throw new BadRequestException();
+				}
 			}
 			else
 			{

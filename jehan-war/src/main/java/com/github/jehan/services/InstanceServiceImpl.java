@@ -1,33 +1,16 @@
-// -----------------------------------------------------------------------------
-// Projet : jehan
-// Client : Pôle Emploi
-// Auteur : giovarej / Bull S.A.S.
-// -----------------------------------------------------------------------------
 package com.github.jehan.services;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
+import com.github.jehan.dao.InstanceDao;
+import com.github.jehan.exception.FilterException;
+import com.github.jehan.model.Instance;
+import com.github.jehan.model.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.jehan.config.ConfigurationLocator;
-import com.github.jehan.model.Instance;
-import com.github.jehan.model.Job;
-import com.github.jehan.model.builder.InstanceBuilder;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigParseOptions;
-import com.typesafe.config.ConfigSyntax;
+import javax.ws.rs.core.MultivaluedMap;
+import java.util.*;
 
 /**
  * Implements {@link InstanceService}
@@ -40,51 +23,23 @@ public class InstanceServiceImpl implements InstanceService
 	/** The logger. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(InstanceServiceImpl.class);
 
+	/** Accepted filters. */
+	private enum ACCEPTED_FILTERS
+	{
+		name, jobs
+	}
+
 	// ------------------------- private members -------------------------
 
-	/** */
-	@Inject
-	private ConfigurationLocator m_configurationLocator;
+	/** DAO handling {@link com.github.jehan.model.Instance}. */
+	@Autowired
+	private InstanceDao m_instanceDao;
 
 	/** The job service. */
 	@Autowired
 	private JobService m_jobService;
 
-	/** The instances configured. */
-	private Map<String, Instance> m_instances = new TreeMap<>();
-
 	// ------------------------- public methods -------------------------
-
-	/**
-	 * Initialize the service.
-	 */
-	@PostConstruct
-	public void initialize()
-	{
-		Config m_jenkinsUrl = ConfigFactory
-				.parseFile(m_configurationLocator.locateConfigurationFile(), ConfigParseOptions.defaults().setSyntax(ConfigSyntax.JSON));
-
-		for (Config co : m_jenkinsUrl.getConfigList("instances"))
-		{
-			String name = co.getString("name");
-			String url = co.getString("url");
-			InstanceBuilder builder = InstanceBuilder.create().withName(name).withUrl(url);
-
-			if (co.hasPath("credentials"))
-			{
-				Config credentials = co.getConfig("credentials");
-				builder.withSecureActive().withLogin(credentials.getString("login")).withToken(credentials.getString("token"));
-			}
-
-			if (co.hasPath("proxy"))
-			{
-				Config proxy = co.getConfig("proxy");
-				builder.withProxyUrl(proxy.getString("url"));
-			}
-			m_instances.put(name, builder.get());
-		}
-		LOGGER.info("Instance configured : {}", m_instances);
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -96,10 +51,78 @@ public class InstanceServiceImpl implements InstanceService
 	{
 		LOGGER.debug("start of findAll()");
 
-		Collection<Instance> instances = m_instances.values();
+		Collection<Instance> instances = m_instanceDao.findAll();
 
+		for (Instance i : instances)
+		{
+			i.getJobs().addAll(m_jobService.findAll(i));
+		}
 		LOGGER.debug("end of findAll() : {}", instances);
 		return instances;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see com.github.jehan.services.InstanceService#findInstancesWithFilter(String, javax.ws.rs.core.MultivaluedMap)
+	 */
+	@Override
+	public Collection<Instance> findInstancesWithFilter(String p_filter, MultivaluedMap<String, String> p_filterValues)
+	{
+		Collection<Instance> result;
+		ACCEPTED_FILTERS filter;
+
+		try
+		{
+			filter = ACCEPTED_FILTERS.valueOf(p_filter);
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new FilterException("Unacceptable filter's name");
+		}
+
+		switch (filter)
+		{
+			case name:
+				List<String> names = p_filterValues.get("name");
+				if (names.isEmpty())
+				{
+					throw new FilterException("Unknown filter's value");
+				}
+				result = findAllByName(names.toArray(new String[names.size()]));
+				for (Instance instance : result)
+				{
+					instance.getJobs().addAll(m_jobService.findAll(instance));
+				}
+				break;
+
+			case jobs:
+				result = new ArrayList<>();
+
+				String jobAttribute;
+				Set<String> keys = p_filterValues.keySet();
+				if (keys.isEmpty())
+				{
+					throw new FilterException("Unknown filter's value");
+				}
+
+				jobAttribute = keys.iterator().next();
+				for (Instance instance : m_instanceDao.findAll())
+				{
+					Collection<Job> jobs = m_jobService.findJobsWithFilter(instance, jobAttribute, p_filterValues);
+					if (!jobs.isEmpty())
+					{
+						instance.getJobs().addAll(jobs);
+						result.add(instance);
+					}
+				}
+				break;
+
+			default:
+				throw new FilterException("Unacceptable filter's name");
+		}
+
+		return result;
 	}
 
 	/**
@@ -112,7 +135,7 @@ public class InstanceServiceImpl implements InstanceService
 	{
 		List<Instance> instancesWithJobsKo = new ArrayList<>();
 
-		for (Instance instance : m_instances.values())
+		for (Instance instance : m_instanceDao.findAll())
 		{
 			Collection<Job> jobs = m_jobService.findAll(instance);
 			Iterator<Job> jobIterator = jobs.iterator();
@@ -134,16 +157,31 @@ public class InstanceServiceImpl implements InstanceService
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see InstanceService#findById(String)
+	 * @see InstanceService#findAllByName(String...)
 	 */
 	@Override
-	public Instance findById(String p_id)
+	public Collection<Instance> findAllByName(String... p_names)
 	{
-		LOGGER.debug("start of findById() with {}", p_id);
+		LOGGER.debug("start of findAllByName() with {}", p_names);
 
-		Instance instance = m_instances.get(p_id);
+		Collection<Instance> result = m_instanceDao.findAllByName(p_names);
+		LOGGER.debug("end of findAllByName({}) : {}", p_names, result);
+		return result;
+	}
 
-		LOGGER.debug("end of findById({}) : {}", p_id, instance);
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see InstanceService#findByName(String)
+	 */
+	@Override
+	public Instance findByName(String p_name)
+	{
+		LOGGER.debug("start of findByName() with {}", p_name);
+
+		Instance instance = m_instanceDao.findByName(p_name);
+
+		LOGGER.debug("end of findByName({}) : {}", p_name, instance);
 		return instance;
 	}
 }
