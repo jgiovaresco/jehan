@@ -8,9 +8,7 @@ import javax.ws.rs.core.Response;
  */
 public class JobsException extends WebApplicationException
 {
-	// ------------------------- Membres private -------------------------
-	// ------------------------- Constructeur -------------------------
-	// ------------------------- Méthodes public -------------------------
+	// ------------------------- constructors -------------------------
 
 	/**
 	 * Constructor
@@ -22,6 +20,4 @@ public class JobsException extends WebApplicationException
 		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(p_Message).type("text/plain").build());
 	}
 
-
-	// ------------------------- Méthodes private -------------------------
 }
