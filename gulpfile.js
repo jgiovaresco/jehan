@@ -13,11 +13,13 @@ var paths = {
 	dist            : 'jehan-ui/dist',
 	distJs          : 'jehan-ui/dist/js',
 	distCss         : 'jehan-ui/dist/css',
+	distImgs: 'jehan-ui/dist/assets/img',
 	srcDir          : 'jehan-ui/src',
 	srcJs           : 'jehan-ui/src/**/*.js',
 	srcCss          : 'jehan-ui/src/css/*.css',
 	srcHtml         : 'jehan-ui/src/**/*.html',
 	srcTpl          : 'jehan-ui/src/**/*.tpl.html',
+	srcImgs : 'jehan-ui/src/assets/img',
 	bower_components: 'jehan-ui/src/bower_components'
 };
 
@@ -33,7 +35,7 @@ var banner = ['/**',
 gulp.task('clean', function () {
 	return gulp.src(paths.dist, {read: false})
 		.pipe(clean());
-})
+});
 
 gulp.task("copy",function () {
 
@@ -48,6 +50,8 @@ gulp.task('dist', ['clean'], function () {
 	gulp.src(paths.srcTpl)
 		.pipe(gulp.dest(paths.dist));
 
+	gulp.src(paths.srcImgs + "/**")
+		.pipe(gulp.dest(paths.distImgs));
 
 	var assets = useref.assets();
 	gulp.src(paths.srcDir + '/index.html')
