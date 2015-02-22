@@ -39,7 +39,10 @@ console.log("Instance : ", instances);
 console.log("Jobs : ", jobs);
 
 app.get('/rest/Instances', function(req, res){
-    res.json(instances);
+//	setTimeout(function() {
+//			res.json(instances);
+//        }, 3000);
+	res.json(instances);
 });
 app.get('/rest/Jobs/:instances', function(req, res) {
 	res.json(jobs[req.params.instances]);
