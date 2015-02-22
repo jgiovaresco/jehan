@@ -45,7 +45,7 @@ gulp.task("copy", function () {
 		.pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('dist', [ 'clean' ], function () {
+gulp.task('dist', [ 'clean', 'karma' ], function () {
 	gulp.src(paths.bower_components + '/bootstrap/dist/fonts/*.{ttf,woff,eof,svg}')
 		.pipe(gulp.dest(paths.dist + '/fonts'));
 
