@@ -29,7 +29,10 @@
     "gulp-if": "^1.2.5",
     "gulp-useref": "^1.1.1",
     "gulp-watch": "^4.1.1",
-    "json-proxy": "^0.3.0"
+	"json-proxy": "^0.3.0",
+	"karma": "~0.12.0",
+	"karma-jasmine": "~0.1.0",
+	"karma-phantomjs-launcher": "~0.1.4"
   },
   "scripts": {
     "postinstall": "bower install && gulp dist",

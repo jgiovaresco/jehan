@@ -5,22 +5,26 @@ var instances = [
     {
         "name": "Jenkins1",
         "secure": true,
-        "url": "http://localhost:8080/"
+	    "url" : "http://localhost:8080/",
+	    "jobs": [{"name": "jobs11", "url": "", "color": "blue"}, {"name": "jobs12", "url": "", "color": "blue"}]
     },
     {
         "name": "Jenkins2",
         "secure": true,
-        "url": "http://localhost:8080/"
+	    "url" : "http://localhost:8080/",
+	    "jobs": [{"name": "jobs21", "url": "", "color": "blue"}, {"name": "jobs22", "url": "", "color": "yellow"}]
     },
     {
         "name": "Jenkins3",
         "secure": true,
-        "url": "http://localhost:8080/"
+	    "url" : "http://localhost:8080/",
+	    "jobs": [{"name": "jobs31", "url": "", "color": "red"}, {"name": "jobs32", "url": "", "color": "yellow"}]
     },
     {
         "name": "Jenkins4",
         "secure": true,
-        "url": "http://localhost:8080/"
+	    "url" : "http://localhost:8080/",
+	    "jobs": [{"name": "jobs41", "url": "", "color": "red"}, {"name": "jobs42", "url": "", "color": "blue"}]
     }
 ];
 
@@ -44,4 +48,4 @@ app.get('/rest/Jobs/:instances', function(req, res) {
 //        }, 3000);
 });
 
-app.listen(8280);
+app.listen(8082);

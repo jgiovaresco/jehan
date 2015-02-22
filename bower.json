@@ -25,6 +25,9 @@
         "bootstrap": "~3.1.1",
         "jquery": "1.11.1"
     },
+  "devDependencies": {
+	"angular-mocks": "1.2.22-build.348+sha.60366c8"
+  },
     "resolutions": {
         "angular": "1.2.22-build.348+sha.60366c8"
     }
