@@ -31,7 +31,7 @@ angular.module('jehan.home', [ 'ngRoute', 'jehan.resources.instances' ])
 		 */
 		$scope.getPanelClass = function (p_instance) {
 			var cssClass = "panel panel-success";
-			if (p_instance.hasJobsKo())
+			if (p_instance.hasKoJobs())
 			{
 				cssClass = "panel panel-danger";
 			}

@@ -22,8 +22,9 @@ describe('Instances resources test', function () {
 		$httpBackend.flush();
 
 		expect(result.length).toBe(1);
-		expect(result[ 0 ].getKoJobsNb()).toBe(0);
-		expect(result[ 0 ].hasJobsKo()).toBe(false);
+		expect(result[ 0 ].getNumberOfKoJobs()).toBe(0);
+        expect(result[ 0 ].getNumberOfOkJobs()).toBe(1);
+		expect(result[ 0 ].hasKoJobs()).toBe(false);
 	});
 
 	it('should returns instances with only red jobs', function () {
@@ -39,8 +40,8 @@ describe('Instances resources test', function () {
 		$httpBackend.flush();
 
 		expect(result.length).toBe(1);
-		expect(result[ 0 ].getKoJobsNb()).toBe(1);
-		expect(result[ 0 ].hasJobsKo()).toBe(true);
+		expect(result[ 0 ].getNumberOfKoJobs()).toBe(1);
+		expect(result[ 0 ].hasKoJobs()).toBe(true);
 	});
 
 	it('should returns instances with only yellow jobs', function () {
@@ -56,8 +57,8 @@ describe('Instances resources test', function () {
 		$httpBackend.flush();
 
 		expect(result.length).toBe(1);
-		expect(result[ 0 ].getKoJobsNb()).toBe(1);
-		expect(result[ 0 ].hasJobsKo()).toBe(true);
+		expect(result[ 0 ].getNumberOfKoJobs()).toBe(1);
+		expect(result[ 0 ].hasKoJobs()).toBe(true);
 	});
 
 	it('should returns instances with jobs red and yellow', function () {
@@ -75,8 +76,8 @@ describe('Instances resources test', function () {
 		$httpBackend.flush();
 
 		expect(result.length).toBe(1);
-		expect(result[ 0 ].getKoJobsNb()).toBe(2);
-		expect(result[ 0 ].hasJobsKo()).toBe(true);
+		expect(result[ 0 ].getNumberOfKoJobs()).toBe(2);
+		expect(result[ 0 ].hasKoJobs()).toBe(true);
 	});
 
 });
