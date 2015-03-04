@@ -40,7 +40,7 @@ describe("Home controller", function () {
 	it("getPanelClass should return success class css", function () {
 		var instance = {};
 		var mockInstance = jasmine.createSpyObj(instance, [ 'hasJobsKo' ]);
-		mockInstance.hasJobsKo.andReturn(false);
+		mockInstance.hasKoJobs.andReturn(false);
 
 		expect(scope.getPanelClass(mockInstance)).toBe("panel panel-success");
 
@@ -49,7 +49,7 @@ describe("Home controller", function () {
 	it("getPanelClass should return danger class css", function () {
 		var instance = {};
 		var mockInstance = jasmine.createSpyObj(instance, [ 'hasJobsKo' ]);
-		mockInstance.hasJobsKo.andReturn(true);
+		mockInstance.hasKoJobs.andReturn(true);
 
 		expect(scope.getPanelClass(mockInstance)).toBe("panel panel-danger");
 
