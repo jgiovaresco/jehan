@@ -1,2 +1,6 @@
 jehan-ui/src/bower_components/
 jehan-ui/dist/
+/node_modules/
+/npm-debug.log
+*.iml
+/.idea/
