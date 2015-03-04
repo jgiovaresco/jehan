@@ -4,3 +4,4 @@ jehan-ui/dist/
 /npm-debug.log
 *.iml
 /.idea/
+/target/

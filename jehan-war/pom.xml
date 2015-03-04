@@ -86,7 +86,7 @@
 			<artifactId>tomcat-catalina</artifactId>
 		</dependency>
 
-		<!-- Pour les tests -->
+		<!-- For the tests -->
 
 		<dependency>
 			<groupId>junit</groupId>

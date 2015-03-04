@@ -179,18 +179,6 @@
 			</plugins>
 		</pluginManagement>
 
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>../jehan-ui/dist</directory>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 	
 	<profiles>
@@ -222,6 +210,16 @@
 							</execution>
 						</executions>
                     </plugin>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webResources>
+								<resource>
+									<directory>..\jehan-ui\dist</directory>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
                 </plugins>
             </build>
         </profile>
@@ -252,6 +250,16 @@
 								</configuration>
 							</execution>
 						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webResources>
+								<resource>
+									<directory>../jehan-ui/dist</directory>
+								</resource>
+							</webResources>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
