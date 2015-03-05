@@ -54,7 +54,7 @@ public class DefaultConfigurationLocatorImplTest
    public void testLocateConfigurationFile_FromSystemProperty() throws Exception
    {
       System.setProperty("JEHAN.DIR", DIR_SYS_PROP);
-      assertThat(FileUtils.readFileToString(m_locator.locateConfigurationFile())).isEqualTo("{\"sysprop\":\"sysprop\"}\n");
+      assertThat(FileUtils.readFileToString(m_locator.locateConfigurationFile())).isEqualTo("{\"sysprop\":\"sysprop\"}"+ System.lineSeparator());
    }
 
    /**
@@ -67,7 +67,7 @@ public class DefaultConfigurationLocatorImplTest
    public void testLocateConfigurationFile_FromHomeDir() throws Exception
    {
       System.setProperty("user.home", DIR_HOME_DIR);
-      assertThat(FileUtils.readFileToString(m_locator.locateConfigurationFile())).isEqualTo("{\"homedir\":\"homedir\"}\n");
+      assertThat(FileUtils.readFileToString(m_locator.locateConfigurationFile())).isEqualTo("{\"homedir\":\"homedir\"}"+ System.lineSeparator());
    }
 
    /**
