@@ -32,11 +32,19 @@
 	"json-proxy": "^0.3.0",
 	"karma": "~0.12.0",
 	"karma-jasmine": "~0.1.0",
-	"karma-phantomjs-launcher": "~0.1.4"
+	"karma-phantomjs-launcher": "~0.1.4",
+	"jasmine-reporters": "^0.4.1",
+	"protractor": "~1.6.1"
   },
   "scripts": {
     "postinstall": "bower install && gulp dist",
     "prestart": "npm install",
-    "start": "gulp"
+    "start": "gulp",
+    	
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor jehan-ui/test/config/protractor.conf.js"
   }
 }

@@ -5,3 +5,7 @@ jehan-ui/dist/
 *.iml
 /.idea/
 /target/
+/org.eclipse.m2e.core.prefs
+/.tern-project
+*.project
+/.settings/
